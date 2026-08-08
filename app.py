@@ -144,8 +144,7 @@ with tab4:
 
     if image_file is not None:
         image = Image.open(image_file)
-        st.image(image, caption="Uploaded image", use_column_width=True)
-
+        st.image(image, caption="Uploaded image", use_container_width=True)
         extracted_text = pytesseract.image_to_string(image)
 
         if extracted_text.strip():
