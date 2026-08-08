@@ -107,23 +107,48 @@ with tab2:
                 st.error(f"Error: {e}")
 
 # ---------------- TAB 3: VOICE INPUT ----------------
+# ---------------- TAB 3: VOICE INPUT ----------------
 with tab3:
-    st.write("Upload a short audio file (WAV/AIFF/FLAC) with clear speech to translate it.")
-    st.caption("Note: works best with .wav files. Record a voice memo and upload here.")
-    audio_file = st.file_uploader("Upload audio", type=["wav", "aiff", "flac"])
+    from audio_recorder_streamlit import audio_recorder
+
+    st.write("🎙️ Record your voice directly, or upload an audio file.")
     target_voice_lang = st.selectbox("Translate to:", lang_names, key="voice_target")
 
-    if audio_file is not None:
+    record_col, upload_col = st.columns(2)
+
+    audio_bytes = None
+
+    with record_col:
+        st.markdown("**Option A: Record now**")
+        recorded_audio = audio_recorder(
+            text="Click to record",
+            recording_color="#e8576e",
+            neutral_color="#6aa36f",
+            icon_size="2x"
+        )
+        if recorded_audio:
+            st.audio(recorded_audio, format="audio/wav")
+            audio_bytes = recorded_audio
+
+    with upload_col:
+        st.markdown("**Option B: Upload a file**")
+        audio_file = st.file_uploader("Upload audio", type=["wav", "aiff", "flac"], key="voice_upload")
+        if audio_file is not None:
+            audio_bytes = audio_file.read()
+            st.audio(audio_bytes)
+
+    if audio_bytes is not None:
         recognizer = sr.Recognizer()
         try:
-            with sr.AudioFile(audio_file) as source:
+            audio_io = io.BytesIO(audio_bytes)
+            with sr.AudioFile(audio_io) as source:
                 audio_data = recognizer.record(source)
                 spoken_text = recognizer.recognize_google(audio_data)
 
             st.write("**Recognized speech:**")
             st.info(spoken_text)
 
-            if st.button("Translate Speech", type="primary"):
+            if st.button("Translate Speech", type="primary", key="translate_voice"):
                 tgt_code = name_to_code[target_voice_lang]
                 result = GoogleTranslator(source="auto", target=tgt_code).translate(spoken_text)
                 st.success(result)
@@ -132,7 +157,7 @@ with tab3:
                 tts.save("voice_output.mp3")
                 st.audio("voice_output.mp3", format="audio/mp3")
         except sr.UnknownValueError:
-            st.error("Could not understand the audio. Try a clearer recording.")
+            st.error("Could not understand the audio. Try recording again more clearly.")
         except Exception as e:
             st.error(f"Error: {e}")
 
