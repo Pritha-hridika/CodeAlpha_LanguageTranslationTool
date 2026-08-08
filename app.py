@@ -145,8 +145,17 @@ with tab4:
     if image_file is not None:
         image = Image.open(image_file)
         st.image(image, caption="Uploaded image", use_container_width=True)
-        extracted_text = pytesseract.image_to_string(image)
+        # Auto-detect and fix orientation
+        try:
+            osd = pytesseract.image_to_osd(image)
+            rotation_angle = int([line for line in osd.split('\n') if 'Rotate' in line][0].split(':')[-1].strip())
+            if rotation_angle != 0:
+                image = image.rotate(-rotation_angle, expand=True)
+                st.info(f"🔄 Auto-rotated image by {rotation_angle}° for better text recognition")
+        except Exception:
+            pass  # if orientation detection fails, proceed with original image
 
+        extracted_text = pytesseract.image_to_string(image)
         if extracted_text.strip():
             st.write("**Extracted text:**")
             st.text_area("OCR result:", extracted_text, height=100)
