@@ -1,3 +1,8 @@
 streamlit
 deep-translator
 gTTS
+langdetect
+SpeechRecognition
+pytesseract
+Pillow
+pydub
