@@ -6,3 +6,4 @@ SpeechRecognition
 pytesseract
 Pillow
 pydub
+audio-recorder-streamlit
