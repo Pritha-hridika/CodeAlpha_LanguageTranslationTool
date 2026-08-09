@@ -1,0 +1,99 @@
+# 🌍 Language Translation Tool
+
+A multi-feature web app that translates text, files, voice recordings, and images between 100+ languages — built for the **CodeAlpha Artificial Intelligence Internship (Task 1)**.
+
+🔗 **Live App:** https://codealphalanguagetranslationtool-4jz7jem9ywhxyjc9tjud2m.streamlit.app/
+
+---
+
+## ✨ Features
+
+- **✍️ Text Translation**
+  - Auto-detects the input language and displays it
+  - Manual override dropdown if auto-detection is wrong (especially useful for short text)
+  - Translate into **up to 4 target languages simultaneously**, shown side by side
+  - Text-to-speech playback for each translated result
+
+- **📄 File Upload Translation**
+  - Upload a `.txt` file
+  - Automatically chunks long text to stay within API limits
+  - Download the translated file directly
+
+- **🎤 Voice Input**
+  - Record your voice live in the browser (mic access) **or** upload an audio file (WAV/AIFF/FLAC)
+  - Converts speech to text, translates it, and plays back the translated audio
+
+- **🖼️ Image Translation (OCR)**
+  - Upload an image (sign, menu, document, screenshot)
+  - Extracts text using Tesseract OCR
+  - Auto-detects and corrects image orientation for better accuracy
+  - Translates the extracted text
+
+---
+
+## 🛠️ Tech Stack
+
+| Purpose | Library |
+|---|---|
+| Web app framework | [Streamlit](https://streamlit.io) |
+| Translation | [deep-translator](https://pypi.org/project/deep-translator/) (Google Translate) |
+| Language detection | [langdetect](https://pypi.org/project/langdetect/) |
+| Text-to-speech | [gTTS](https://pypi.org/project/gTTS/) |
+| Speech-to-text | [SpeechRecognition](https://pypi.org/project/SpeechRecognition/) |
+| Live audio recording | [audio-recorder-streamlit](https://pypi.org/project/audio-recorder-streamlit/) |
+| OCR (image → text) | [pytesseract](https://pypi.org/project/pytesseract/) + Tesseract OCR |
+| Image handling | [Pillow](https://pypi.org/project/Pillow/) |
+
+---
+
+## 🚀 Run Locally
+
+```bash
+# Clone the repo
+git clone https://github.com/<your-username>/CodeAlpha_LanguageTranslationTool.git
+cd CodeAlpha_LanguageTranslationTool
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+streamlit run app.py
+```
+
+The app will open automatically at `http://localhost:8501`.
+
+> **Note:** OCR requires the Tesseract binary installed on your system.
+> - Windows: [Tesseract installer](https://github.com/UB-Mannheim/tesseract/wiki)
+> - Mac: `brew install tesseract`
+> - Linux: `sudo apt install tesseract-ocr`
+
+---
+
+## 📁 Project Structure
+
+```
+CodeAlpha_LanguageTranslationTool/
+├── app.py              # Main Streamlit application
+├── requirements.txt    # Python dependencies
+├── packages.txt        # System dependencies (Tesseract, for Streamlit Cloud)
+└── README.md           # Project documentation
+```
+
+---
+
+## 🎓 About
+
+This project was built as part of **Task 1: Language Translation Tool** for the CodeAlpha Artificial Intelligence Internship.
+
+**Task requirements covered:**
+- ✅ User interface for text input and language selection
+- ✅ Translation API integration
+- ✅ Clear display of translated text
+- ✅ Text-to-speech (optional feature)
+- ✅ Additional features: auto-detection, multi-target translation, file upload, voice input, and OCR image translation
+
+---
+
+## 📬 Contact
+
+Built by Hridika Chanda as part of the CodeAlpha AI Internship.
