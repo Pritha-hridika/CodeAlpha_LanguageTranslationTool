@@ -31,12 +31,25 @@ def detect_language_name(text):
 tab1, tab2, tab3, tab4 = st.tabs(["✍️ Text", "📄 File Upload", "🎤 Voice Input", "🖼️ Image (OCR)"])
 
 # ---------------- TAB 1: TEXT + AUTO-DETECT + MULTI-TARGET ----------------
+# ---------------- TAB 1: TEXT + AUTO-DETECT + MULTI-TARGET ----------------
 with tab1:
     text_input = st.text_area("Enter text to translate:", height=150, key="text_tab")
 
+    detected_code = "auto"  # default fallback
+
     if text_input.strip():
-        detected_name, detected_code = detect_language_name(text_input)
-        st.info(f"🔍 Detected language: **{detected_name}**")
+        if len(text_input.strip()) < 4:
+            st.caption("⚠️ Type a longer phrase for more accurate language detection.")
+        else:
+            detected_name, detected_code = detect_language_name(text_input)
+            st.info(f"🔍 Detected language: **{detected_name}** — you can override below if it's wrong.")
+
+    source_override = st.selectbox(
+        "Source language (auto-detected — change if incorrect):",
+        ["Auto-Detect"] + lang_names,
+        index=0,
+        key="source_override"
+    )
 
     target_choices = st.multiselect(
         "Translate into (select up to 4):",
@@ -51,13 +64,19 @@ with tab1:
         elif not target_choices:
             st.warning("Pick at least one target language.")
         else:
+            # Decide final source: manual override wins if user picked one
+            if source_override == "Auto-Detect":
+                final_source = "auto"
+            else:
+                final_source = name_to_code[source_override]
+
             cols = st.columns(len(target_choices))
             for col, target_name in zip(cols, target_choices):
                 with col:
                     st.markdown(f"**{target_name}**")
                     try:
                         tgt_code = name_to_code[target_name]
-                        result = GoogleTranslator(source="auto", target=tgt_code).translate(text_input)
+                        result = GoogleTranslator(source=final_source, target=tgt_code).translate(text_input)
                         st.success(result)
                         st.session_state[f"audio_{target_name}"] = (result, tgt_code)
                     except Exception as e:
