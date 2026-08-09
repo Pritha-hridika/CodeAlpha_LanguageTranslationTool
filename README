@@ -33,16 +33,16 @@ A multi-feature web app that translates text, files, voice recordings, and image
 
 ## 🛠️ Tech Stack
 
-| Purpose | Library |
-|---|---|
-| Web app framework | [Streamlit](https://streamlit.io) |
-| Translation | [deep-translator](https://pypi.org/project/deep-translator/) (Google Translate) |
-| Language detection | [langdetect](https://pypi.org/project/langdetect/) |
-| Text-to-speech | [gTTS](https://pypi.org/project/gTTS/) |
-| Speech-to-text | [SpeechRecognition](https://pypi.org/project/SpeechRecognition/) |
-| Live audio recording | [audio-recorder-streamlit](https://pypi.org/project/audio-recorder-streamlit/) |
-| OCR (image → text) | [pytesseract](https://pypi.org/project/pytesseract/) + Tesseract OCR |
-| Image handling | [Pillow](https://pypi.org/project/Pillow/) |
+|         Purpose      |                                     Library                                     |
+|-          -         -|-                                       -                                       -|
+| Web app framework    | [Streamlit](https://streamlit.io)                                               |
+| Translation          | [deep-translator](https://pypi.org/project/deep-translator/) (Google Translate) |
+| Language detection   | [langdetect](https://pypi.org/project/langdetect/)                              |
+| Text-to-speech       | [gTTS](https://pypi.org/project/gTTS/)                                          |
+| Speech-to-text       | [SpeechRecognition](https://pypi.org/project/SpeechRecognition/)                |
+| Live audio recording | [audio-recorder-streamlit](https://pypi.org/project/audio-recorder-streamlit/)  |
+| OCR (image → text)   | [pytesseract](https://pypi.org/project/pytesseract/) + Tesseract OCR            |
+| Image handling       | [Pillow](https://pypi.org/project/Pillow/)                                      |
 
 ---
 
